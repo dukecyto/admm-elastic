@@ -23,6 +23,7 @@
 #include "Force.hpp"
 #include "ExplicitForce.hpp"
 #include <Eigen/SparseCholesky>
+#include <Eigen/IterativeLinearSolvers>
 
 namespace admm {
 
@@ -85,7 +86,8 @@ protected:
 
 	// Solver variables computed in initialize
 	Eigen::SparseMatrix<double> solver_dt2_Dt_Wt_W;
-	Eigen::SimplicialLDLT< Eigen::SparseMatrix<double> > solver;
+	// Eigen::SimplicialLDLT< Eigen::SparseMatrix<double> > solver;
+	Eigen::ConjugateGradient< Eigen::SparseMatrix<double>, Eigen::Upper|Eigen::Lower > solver;
 
 	// These variables don't need to be class members, but
 	// are stored as such to avoid reallocation. Otherwise it
